@@ -27,7 +27,7 @@ function execute_command(ch) {
 }
 
 function update_status(status) {
-    var params = {'status': encodeURIComponent(status)};
+    var params = {'status': status};
     $.post('/update_status', params);
 }
 
@@ -51,7 +51,7 @@ function format_status(status) {
     var status_line = $('<div class="status" />');
     status_line.attr('id', status.id);
     $('<span class="name" />').text(status.user.screen_name).appendTo(status_line);
-    $('<span class="text" />').text(': ' + status.text).appendTo(status_line);
+    $('<span class="text" />').html(': ' + status.text).appendTo(status_line);
 
     return status_line;
 }
