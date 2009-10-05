@@ -26,14 +26,13 @@ function execute_command(ch) {
     }
 }
 
-function update_status(status) {
-    var params = {'status': status};
-    $.post('/update_status', params);
+function update_status(s) {
+    $.post('/statuses/update.json', {status: s});
 }
 
 function get_friends_timeline() {
     var params = (last_status_id) ? { since_id: last_status_id } : {};
-    $.getJSON('/friends_timeline', params, function (data) {
+    $.getJSON('/statuses/friends_timeline.json', params, function (data) {
         last_status_id = data[0].id;
 
         sort_by_status_id(data);

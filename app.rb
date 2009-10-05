@@ -24,18 +24,15 @@ get '/' do
   redirect '/index.html'
 end
 
-get '/friends_timeline' do
-  response = access_token.get(
-    key['site'] + '/statuses/friends_timeline.json' +
-    (params['since_id'] ? '?since_id=' + params['since_id'] : '')
-  )
-  response.body
+get '/*' do
+  access_token.get(
+    "#{key['site']}#{request.path}?#{request.query_string}"
+  ).body
 end
 
-post '/update_status' do
-  response = access_token.post(
-    key['site'] + '/statuses/update.json',
-    'status' => params['status']
-  )
-  response.body
+post '/*' do
+  access_token.post(
+    "#{key['site']}#{request.path}",
+    params
+  ).body
 end
