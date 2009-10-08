@@ -80,6 +80,9 @@ function select_prev_status() {
 function select_status(status) {
     status.css('background-color', '#DDDDDD');
     current_status_id = status.attr('id');
+
+    var o = ($(window).height() - status.height()) / 2;
+    $.scrollTo(status, 200, {axis: 'y', offset: -o});
 }
 
 function unselect_status(status) {
