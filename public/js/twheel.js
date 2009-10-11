@@ -94,10 +94,12 @@ function insert_status(status) {
 }
 
 function format_status(status) {
-    var status_line = $('<div class="status" />');
+    var status_line = $('<div class="status">');
     status_line.attr('id', status.id);
-    $('<span class="name" />').text(status.user.screen_name).appendTo(status_line);
-    $('<span class="text" />').html(': ' + status.text).appendTo(status_line);
+
+    $('<img class="icon">').attr('src', status.user.profile_image_url).attr('alt', status.user.screen_name).appendTo(status_line);
+    $('<span class="name">').text(status.user.screen_name).appendTo(status_line);
+    $('<span class="text">').html(': ' + status.text).appendTo(status_line);
 
     return status_line;
 }
