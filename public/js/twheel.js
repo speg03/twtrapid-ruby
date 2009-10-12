@@ -76,22 +76,22 @@ function select_prev_status() {
 }
 
 function select_status(status) {
-    status.addClass('current').cornerz();
+    status.addClass('current');
 
     var o = ($(window).height() - status.height()) / 2;
     $.scrollTo(status, 0, {axis: 'y', offset: -o});
 }
 
 function unselect_status(status) {
-    status.removeClass('current').cornerz();
+    status.removeClass('current');
 }
 
 function insert_status(status) {
-    format_status(status).cornerz().appendTo('#output');
+    format_status(status).appendTo('#output');
 }
 
 function format_status(status) {
-    var status_line = $('<div class="status">');
+    var status_line = $('<div class="ui-widget-content ui-corner-all status">');
     status_line.attr('id', status.id);
 
     $('<img class="icon">')
