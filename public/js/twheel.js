@@ -43,15 +43,13 @@ function get_friends_timeline() {
     });
 }
 
-var current_status_id;
-
 function select_next_status() {
-    if (!current_status_id) {
+    var current_status = $('.current');
+    if (current_status.length == 0) {
         select_status($('.status:first'));
         return;
     }
 
-    var current_status = $('.status#' + current_status_id);
     if (current_status.attr('id') == $('.status:last').attr('id')) {
         return;
     }
@@ -62,12 +60,12 @@ function select_next_status() {
 }
 
 function select_prev_status() {
-    if (!current_status_id) {
+    var current_status = $('.current');
+    if (current_status.length == 0) {
         select_status($('.status:first'));
         return;
     }
 
-    var current_status = $('.status#' + current_status_id);
     if (current_status.attr('id') == $('.status:first').attr('id')) {
         return;
     }
@@ -78,15 +76,14 @@ function select_prev_status() {
 }
 
 function select_status(status) {
-    status.css('background-color', '#DDDDDD');
-    current_status_id = status.attr('id');
+    status.addClass('current');
 
     var o = ($(window).height() - status.height()) / 2;
-    $.scrollTo(status, 200, {axis: 'y', offset: -o});
+    $.scrollTo(status, 0, {axis: 'y', offset: -o});
 }
 
 function unselect_status(status) {
-    status.css('background-color', 'transparent');
+    status.removeClass('current');
 }
 
 function insert_status(status) {
