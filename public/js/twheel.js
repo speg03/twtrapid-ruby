@@ -44,7 +44,7 @@ function get_friends_timeline() {
 }
 
 function select_next_status() {
-    var current_status = $('.current');
+    var current_status = $('.status.current');
     if (current_status.length == 0) {
         select_status($('.status:first'));
         return;
@@ -60,7 +60,7 @@ function select_next_status() {
 }
 
 function select_prev_status() {
-    var current_status = $('.current');
+    var current_status = $('.status.current');
     if (current_status.length == 0) {
         select_status($('.status:first'));
         return;
@@ -76,14 +76,14 @@ function select_prev_status() {
 }
 
 function select_status(status) {
-    status.addClass('current');
+    status.addClass('ui-state-highlight current');
 
     var o = ($(window).height() - status.height()) / 2;
     $.scrollTo(status, 0, {axis: 'y', offset: -o});
 }
 
 function unselect_status(status) {
-    status.removeClass('current');
+    status.removeClass('ui-state-highlight current');
 }
 
 function insert_status(status) {
