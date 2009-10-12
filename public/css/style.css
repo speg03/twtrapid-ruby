@@ -22,3 +22,13 @@ a {
     width: 48px;
     height: 48px;
 }
+
+.status {
+    border: solid 5px #DDDDDD;
+    padding: 5px;
+    margin: 5px;
+}
+
+.current {
+    border-color: #B6FF00;
+}
