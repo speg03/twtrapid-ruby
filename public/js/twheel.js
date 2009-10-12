@@ -76,18 +76,18 @@ function select_prev_status() {
 }
 
 function select_status(status) {
-    status.addClass('current');
+    status.addClass('current').cornerz();
 
     var o = ($(window).height() - status.height()) / 2;
     $.scrollTo(status, 0, {axis: 'y', offset: -o});
 }
 
 function unselect_status(status) {
-    status.removeClass('current');
+    status.removeClass('current').cornerz();
 }
 
 function insert_status(status) {
-    format_status(status).appendTo('#output');
+    format_status(status).cornerz().appendTo('#output');
 }
 
 function format_status(status) {
