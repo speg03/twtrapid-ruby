@@ -6,8 +6,9 @@ img {
     border-style: none;
 }
 
-a {
-    
+.icon {
+    width: 24px;
+    height: 24px;
 }
 
 #twheel {
@@ -18,9 +19,16 @@ a {
     text-align: left;
 }
 
-.icon {
-    width: 48px;
-    height: 48px;
+.status-header {
+
+}
+
+.icon-container {
+    float: left;
+}
+
+.name {
+    float: left;
 }
 
 .status {

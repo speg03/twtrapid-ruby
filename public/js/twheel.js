@@ -75,39 +75,43 @@ function select_prev_status() {
     select_status(prev_status);
 }
 
-function select_status(status) {
-    status.addClass('ui-state-highlight current');
+function select_status(status_jquery) {
+    status_jquery.addClass('ui-state-highlight current');
 
-    var o = ($(window).height() - status.height()) / 2;
-    $.scrollTo(status, 0, {axis: 'y', offset: -o});
+    var o = ($(window).height() - status_jquery.height()) / 2;
+    $.scrollTo(status_jquery, 0, {axis: 'y', offset: -o});
 }
 
-function unselect_status(status) {
-    status.removeClass('ui-state-highlight current');
+function unselect_status(status_jquery) {
+    status_jquery.removeClass('ui-state-highlight current');
 }
 
-function insert_status(status) {
-    format_status(status).appendTo('#output');
+function insert_status(status_jquery) {
+    format_status(status_jquery).appendTo('#output');
 }
 
-function format_status(status) {
-    var status_line = $('<div class="ui-widget-content ui-corner-all status">');
-    status_line.attr('id', status.id);
+function format_status(status_json) {
+    var status = $('<div class="ui-widget-content ui-corner-all status">')
+        .attr('id', status_json.id);
 
-    $('<img class="icon">')
-        .attr('src', status.user.profile_image_url)
-        .attr('alt', status.user.screen_name)
-        .appendTo(status_line);
+    var icon_container = $('<div class="icon-container">')
+        .append(
+            $('<img class="icon">')
+                .attr('src', status_json.user.profile_image_url)
+                .attr('alt', status_json.user.screen_name)
+        );
 
-    $('<span class="name">')
-        .text(status.user.screen_name)
-        .appendTo(status_line);
+    $('<div class="ui-helper-clearfix status-header">')
+        .append(
+            icon_container
+        ).append(
+            $('<div class="name">')
+                .text(status_json.user.screen_name)
+        ).appendTo(status);
 
-    $('<span class="text">')
-        .html(': ' + status.text)
-        .appendTo(status_line);
+    $('<div class="status-body">').html(status_json.text).appendTo(status);
 
-    return status_line;
+    return status;
 }
 
 function sort_by_status_id(data) {
