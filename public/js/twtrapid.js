@@ -17,23 +17,15 @@ function execute_command(ch) {
     case 'k':
         select_prev_status();
         break;
-    case 'u':
-        var status = prompt();
-        if (status) update_status(status);
-        break;
     default:
         /* do nothing */
     }
 }
 
-function update_status(s) {
-    $.post('/statuses/update.json', {status: s});
-}
-
 function get_friends_timeline() {
     var last_status_id = $('.status:last').attr('id');
     var params = (last_status_id) ? {since_id: last_status_id} : {};
-    $.getJSON('/statuses/friends_timeline.json', params, function (data) {
+    $.getJSON('/friends_timeline', params, function (data) {
         if (data.length == 0) return;
 
         sort_by_status_id(data);

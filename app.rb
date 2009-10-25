@@ -22,15 +22,8 @@ get '/' do
   redirect '/index.html'
 end
 
-get '/*' do
+get '/friends_timeline' do
   access_token.get(
-    "#{key['site']}#{request.path}?#{request.query_string}"
-  ).body
-end
-
-post '/*' do
-  access_token.post(
-    "#{key['site']}#{request.path}",
-    params
+    "http://twitter.com/statuses/friends_timeline.json?#{request.query_string}"
   ).body
 end
