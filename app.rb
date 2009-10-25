@@ -3,6 +3,7 @@
 require 'yaml'
 
 require 'rubygems'
+require 'rb-gae-support'
 require 'oauth'
 require 'sinatra'
 
@@ -17,6 +18,16 @@ access_token = OAuth::AccessToken.new(
   key['access_token'],
   key['access_token_secret']
 )
+
+before do
+  unless GAE::User.logged_in?
+    redirect GAE::User.login_url('/')
+  end
+end
+
+get '/logout' do
+  redirect GAE::User.logout_url('/')
+end
 
 get '/' do
   redirect '/index.html'
