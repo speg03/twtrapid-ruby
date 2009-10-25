@@ -6,8 +6,6 @@ require 'rubygems'
 require 'oauth'
 require 'sinatra'
 
-set :port, 10080
-
 key = YAML::load_file('key.yml')
 consumer = OAuth::Consumer.new(
   key['consumer_key'],
