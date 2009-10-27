@@ -1,0 +1,11 @@
+= Twtrapid
+キーボード操作に特化した Twitter クライアントです。
+Google App Engine 上の JRuby で動作しています。
+
+== Install
+  $ sudo gem install google-appengine
+  $ cd twtrapid
+  $ appcfg.rb gem install sinatra oauth rb-gae-support
+
+== Deploy
+  $ appcfg.rb update .
