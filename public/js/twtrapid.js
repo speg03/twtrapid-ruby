@@ -11,11 +11,15 @@ $(function () {
 
 function execute_command(ch) {
     switch (ch) {
-    case 'j':
+      case 'j':
         select_next_status();
         break;
-    case 'k':
+      case 'k':
         select_prev_status();
+        break;
+      case 'u':
+        var msg = prompt('What are you doing?');
+        if (msg) update(msg);
         break;
     default:
         /* do nothing */
@@ -33,6 +37,10 @@ function get_friends_timeline() {
             insert_status(status);
         });
     });
+}
+
+function update(msg) {
+    $.post('/update', {status: msg});
 }
 
 function select_next_status() {

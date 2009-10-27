@@ -69,3 +69,10 @@ get '/friends_timeline' do
     "#{SITE}/statuses/friends_timeline.json?#{request.query_string}"
   ).body
 end
+
+post '/update' do
+  twitter.post(
+    "#{SITE}/statuses/update.json",
+    params
+  ).body
+end
