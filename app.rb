@@ -7,50 +7,45 @@ require 'rb-gae-support'
 require 'oauth'
 require 'sinatra'
 
-enable :sessions
-
 configure do
+  enable :sessions
   key = YAML::load_file('key.yml')
-  CONSUMER_KEY = key['consumer_key']
-  CONSUMER_SECRET = key['consumer_secret']
   SITE = 'http://twitter.com'
-  consumer = OAuth::Consumer.new(CONSUMER_KEY, CONSUMER_SECRET, :site => SITE)
-  set :consumer, consumer
+  CONSUMER = OAuth::Consumer.new(
+    key['consumer_key'], key['consumer_secret'], :site => SITE)
 end
 
-# access_token = OAuth::AccessToken.new(
-#   consumer,
-#   key['access_token'],
-#   key['access_token_secret']
-# )
+def twitter
+  user = GAE::User.current
+  access_token = GAE::Memcache[user.email + '(access token)']
+  access_secret = GAE::Memcache[user.email + '(access secret)']
+
+  return nil unless access_token && access_secret
+  OAuth::AccessToken.new(CONSUMER, access_token, access_secret)
+end
 
 def verify
-  unless GAE::User.logged_in?
+  if not GAE::User.logged_in?
     redirect GAE::User.login_url('/')
-  else
-    user = GAE::User.current
-    access_token = GAE::Memcache[user.email + '(access token)']
-    access_secret = GAE::Memcache[user.email + '(access secret)']
-
-    if access_token && access_secret
-      @twitter = OAuth::AccessToken.new(options.consumer, access_token, access_secret)
-    else
-      request_token = options.consumer.get_request_token(
-        :oauth_callback => "http://twtrapid.appspot.com/verified")
-      session[:request_token] = request_token.token
-      session[:request_token_secret] = request_token.secret
-      redirect request_token.authorize_url
-    end
+  elsif not twitter
+    request_token = CONSUMER.get_request_token(
+      :oauth_callback => "http://#{request.host}:#{request.port}/oauth_callback")
+    session[:request_token] = request_token.token
+    session[:request_token_secret] = request_token.secret
+    redirect request_token.authorize_url
   end
 end
 
 get '/logout' do
+  user = GAE::User.current
+  GAE::Memcache.delete(user.email + '(access token)')
+  GAE::Memcache.delete(user.email + '(access secret)')
   redirect GAE::User.logout_url('/')
 end
 
-get '/verified' do
+get '/oauth_callback' do
   request_token = OAuth::RequestToken.new(
-    options.consumer, session[:request_token], session[:request_token_secret])
+    CONSUMER, session[:request_token], session[:request_token_secret])
 
   puts "oauth_token: #{params[:oauth_token]}"
   puts "oauth_verifier: #{params[:oauth_verifier]}"
@@ -66,13 +61,11 @@ end
 
 get '/' do
   verify
-  # redirect '/timeline.html'
-  "Hello, Twitter!"
+  redirect '/timeline.html'
 end
 
 get '/friends_timeline' do
-  verify
-  @twitter.get(
-    "http://twitter.com/statuses/friends_timeline.json?#{request.query_string}"
+  twitter.get(
+    "#{SITE}/statuses/friends_timeline.json?#{request.query_string}"
   ).body
 end
