@@ -2,6 +2,8 @@
 キーボード操作に特化した Twitter クライアントです。
 Google App Engine 上の JRuby で動作しています。
 
+主な更新情報はこちら: http://d.hatena.ne.jp/speg03/searchdiary?word=%2a%5bTwtrapid%5d
+
 == Install
   $ sudo gem install google-appengine
   $ cd twtrapid
