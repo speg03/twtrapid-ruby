@@ -18,7 +18,7 @@ class Twtrapid
 
   def self.authorized?
     token, secret = get_access_token
-    token && secret
+    token and secret
   end
 
   def self.authorize_url(callback_url)
