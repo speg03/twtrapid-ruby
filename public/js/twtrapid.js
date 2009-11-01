@@ -24,6 +24,9 @@ function execute_command(ch) {
       case 'f':
         favorite();
         break;
+      case 'o':
+        open_link();
+        break;
     default:
         /* do nothing */
     }
@@ -53,6 +56,12 @@ function favorite() {
     var current_id = current_status.attr('id');
     $.post('/favorites_create', {id: current_id}, function () {
         alert('favorited!');
+    });
+}
+
+function open_link() {
+    $('.status.current a.status-link').each(function () {
+        window.open($(this).attr('href'));
     });
 }
 
@@ -132,7 +141,7 @@ function format_status(status_json) {
 
 function create_link(status_text) {
     var text = status_text.replace(/(https?:\/\/[\w-.!~*'();/?:@&=+$,%#]+)/g,
-                        "<a href=\"$1\" target=\"_blank\">$1</a>");
+                        "<a href=\"$1\" class=\"status-link\" target=\"_blank\">$1</a>");
     text = text.replace(/@(\w+)/g,
                         "<a href=\"http://twitter.com/$1\" target=\"_blank\">@$1</a>");
     return text;
