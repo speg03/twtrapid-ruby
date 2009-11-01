@@ -114,17 +114,28 @@ function format_status(status_json) {
                 .attr('alt', status_json.user.screen_name)
         );
 
+    var name = status_json.user.screen_name.replace(
+            /(.*)/, "<a href=\"http://twitter.com/$1\" target=\"_blank\">$1</a>");
     $('<div class="ui-helper-clearfix status-header">')
         .append(
             icon_container
         ).append(
             $('<div class="name">')
-                .text(status_json.user.screen_name)
+                .html(name)
         ).appendTo(status);
 
-    $('<div class="status-body">').html(status_json.text).appendTo(status);
+    var text = create_link(status_json.text);
+    $('<div class="status-body">').html(text).appendTo(status);
 
     return status;
+}
+
+function create_link(status_text) {
+    var text = status_text.replace(/(https?:\/\/[\w-.!~*'();/?:@&=+$,%#]+)/g,
+                        "<a href=\"$1\" target=\"_blank\">$1</a>");
+    text = text.replace(/@(\w+)/g,
+                        "<a href=\"http://twitter.com/$1\" target=\"_blank\">@$1</a>");
+    return text;
 }
 
 function sort_by_status_id(data) {
