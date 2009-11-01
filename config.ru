@@ -3,6 +3,6 @@ require 'app'
 
 AppEngine::Rack.configure_app(
   :application => 'twtrapid',
-  :version => 1)
+  :version => 'current')
 
 run Sinatra::Application
