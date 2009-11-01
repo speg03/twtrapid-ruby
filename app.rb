@@ -44,8 +44,10 @@ get '/' do
 end
 
 get '/friends_timeline' do
+  since_id = params[:since_id] ? params[:since_id] : nil
+  query = since_id ? "?since_id=#{since_id}" : ""
   Twtrapid.get(
-    "#{SITE}/statuses/friends_timeline.json?#{request.query_string}")
+    "#{SITE}/statuses/friends_timeline.json#{query}")
 end
 
 post '/update' do
