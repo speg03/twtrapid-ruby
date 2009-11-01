@@ -21,6 +21,9 @@ function execute_command(ch) {
         var msg = prompt('What are you doing?');
         if (msg) update(msg);
         break;
+      case 'f':
+        favorite();
+        break;
     default:
         /* do nothing */
     }
@@ -41,6 +44,16 @@ function get_friends_timeline() {
 
 function update(msg) {
     $.post('/update', {status: msg});
+}
+
+function favorite() {
+    var current_status = $('.status.current');
+    if (current_status.length == 0) return;
+
+    var current_id = current_status.attr('id');
+    $.post('/favorites_create', {id: current_id}, function () {
+        alert('favorited!');
+    });
 }
 
 function select_next_status() {

@@ -54,3 +54,9 @@ post '/update' do
   Twtrapid.post(
     "#{SITE}/statuses/update.json", params)
 end
+
+post '/favorites_create' do
+  id = params[:id]
+  Twtrapid.post(
+    "#{SITE}/favorites/create/#{id}.json", {})
+end
