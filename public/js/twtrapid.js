@@ -18,8 +18,13 @@ function execute_command(ch) {
         select_prev_status();
         break;
       case 'u':
-        var msg = prompt('What are you doing?');
-        if (msg) update(msg);
+        update();
+        break;
+      case 'r':
+        reply();
+        break;
+      case 'R':
+        retweet();
         break;
       case 'f':
         favorite();
@@ -45,7 +50,36 @@ function get_friends_timeline() {
     });
 }
 
-function update(msg) {
+function update() {
+    var msg = prompt('What are you doing?');
+    if (msg) $.post('/update', {status: msg});
+}
+
+function reply() {
+    var current_status = $('.status.current');
+    if (current_status.length == 0) return;
+
+    var current_id = current_status.attr('id');
+    var name = unlink_text(current_status.find('.name').html());
+    var text = unlink_text(current_status.find('.status-body').html());
+
+    var msg = prompt('Reply to ' + name + ': ' + text);
+    if (msg) {
+        msg = '@' + name + ' ' + msg;
+        $.post('/update', {status: msg, in_reply_to_status_id: current_id});
+    }
+}
+
+function retweet() {
+    var current_status = $('.status.current');
+    if (current_status.length == 0) return;
+
+    var name = unlink_text(current_status.find('.name').html());
+    var text = unlink_text(current_status.find('.status-body').html());
+
+    var msg = prompt('Retweet of ' + name + ': ' + text);
+    if (msg) msg = msg + ' ';
+    msg = msg + 'RT @' + name + ': ' + text;
     $.post('/update', {status: msg});
 }
 
@@ -133,18 +167,22 @@ function format_status(status_json) {
                 .html(name)
         ).appendTo(status);
 
-    var text = create_link(status_json.text);
+    var text = link_text(status_json.text);
     $('<div class="status-body">').html(text).appendTo(status);
 
     return status;
 }
 
-function create_link(status_text) {
-    var text = status_text.replace(/(https?:\/\/[\w-.!~*'();/?:@&=+$,%#]+)/g,
+function link_text(text) {
+    var linked_text = text.replace(/(https?:\/\/[\w-.!~*'();/?:@&=+$,%#]+)/g,
                         "<a href=\"$1\" class=\"status-link\" target=\"_blank\">$1</a>");
-    text = text.replace(/@(\w+)/g,
+    linked_text = linked_text.replace(/@(\w+)/g,
                         "<a href=\"http://twitter.com/$1\" target=\"_blank\">@$1</a>");
-    return text;
+    return linked_text;
+}
+
+function unlink_text(text) {
+    return text.replace(/<[^>]*>/g, '');
 }
 
 function sort_by_status_id(data) {
