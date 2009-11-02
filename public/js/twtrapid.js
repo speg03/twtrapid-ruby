@@ -11,27 +11,13 @@ $(function () {
 
 function execute_command(ch) {
     switch (ch) {
-      case 'j':
-        select_next_status();
-        break;
-      case 'k':
-        select_prev_status();
-        break;
-      case 'u':
-        update();
-        break;
-      case 'r':
-        reply();
-        break;
-      case 'R':
-        retweet();
-        break;
-      case 'f':
-        favorite();
-        break;
-      case 'o':
-        open_link();
-        break;
+      case 'j': select_next_status(); break;
+      case 'k': select_prev_status(); break;
+      case 'u': update(); break;
+      case 'r': reply(); break;
+      case 'R': retweet(); break;
+      case 'f': favorite(); break;
+      case 'o': open_link(); break;
     default:
         /* do nothing */
     }
