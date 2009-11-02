@@ -13,6 +13,8 @@ function execute_command(ch) {
     switch (ch) {
       case 'j': select_next_status(); break;
       case 'k': select_prev_status(); break;
+      case 'g': select_first_status(); break;
+      case 'G': select_last_status(); break;
       case 'u': update(); break;
       case 'r': reply(); break;
       case 'R': retweet(); break;
@@ -115,6 +117,22 @@ function select_prev_status() {
 
     var prev_status = current_status.prev();
     select_status(prev_status);
+}
+
+function select_first_status() {
+    var current_status = $('.status.current');
+    if (current_status.length != 0) {
+        unselect_status(current_status);
+    }
+    select_status($('.status:first'));
+}
+
+function select_last_status() {
+    var current_status = $('.status.current');
+    if (current_status.length != 0) {
+        unselect_status(current_status);
+    }
+    select_status($('.status:last'));
 }
 
 function select_status(status_jquery) {
