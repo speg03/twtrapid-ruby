@@ -29,7 +29,7 @@ function get_friends_timeline() {
     $.getJSON('/friends_timeline', params, function (data) {
         if (data.length == 0) return;
 
-        sort_by_status_id(data);
+        data.reverse();
         $.each(data, function (i, status) {
             insert_status(status);
         });
@@ -169,10 +169,4 @@ function link_text(text) {
 
 function unlink_text(text) {
     return text.replace(/<[^>]*>/g, '');
-}
-
-function sort_by_status_id(data) {
-    data.sort(function (s1, s2) {
-        return s1.id - s2.id;
-    });
 }
