@@ -97,7 +97,6 @@ function select_next_status() {
     if (current_status.attr('id') == $('.status:last').attr('id')) {
         return;
     }
-    unselect_status(current_status);
 
     var next_status = current_status.next();
     select_status(next_status);
@@ -113,41 +112,33 @@ function select_prev_status() {
     if (current_status.attr('id') == $('.status:first').attr('id')) {
         return;
     }
-    unselect_status(current_status);
 
     var prev_status = current_status.prev();
     select_status(prev_status);
 }
 
 function select_first_status() {
-    var current_status = $('.status.current');
-    if (current_status.length != 0) {
-        unselect_status(current_status);
-    }
     select_status($('.status:first'));
 }
 
 function select_last_status() {
-    var current_status = $('.status.current');
-    if (current_status.length != 0) {
-        unselect_status(current_status);
-    }
     select_status($('.status:last'));
 }
 
 function select_status(status_jquery) {
+    unselect_status();
     status_jquery.addClass('ui-state-highlight current');
 
     var o = ($(window).height() - status_jquery.height()) / 2;
     $.scrollTo(status_jquery, 0, {axis: 'y', offset: -o});
 }
 
-function unselect_status(status_jquery) {
-    status_jquery.removeClass('ui-state-highlight current');
+function unselect_status() {
+    $('.status.current').removeClass('ui-state-highlight current');
 }
 
-function insert_status(status_jquery) {
-    format_status(status_jquery).prependTo('#output');
+function insert_status(status_json) {
+    format_status(status_json).prependTo('#output');
 }
 
 function format_status(status_json) {
@@ -173,6 +164,10 @@ function format_status(status_json) {
 
     var text = link_text(status_json.text);
     $('<div class="status-body">').html(text).appendTo(status);
+
+    status.click(function () {
+        select_status($(this));
+    });
 
     return status;
 }
