@@ -52,7 +52,7 @@ var TwtrapidUI = {
             "<a href=\"$1\" class=\"status-link\" target=\"_blank\">$1</a>");
         linked_text = linked_text.replace(
             /@(\w+)/g,
-            "<a href=\"http://twitter.com/$1\" target=\"_blank\">@$1</a>");
+            "@<a href=\"http://twitter.com/$1\" target=\"_blank\">$1</a>");
         return linked_text;
     },
 
