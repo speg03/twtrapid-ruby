@@ -24,7 +24,7 @@ function execute_command(ch) {
 }
 
 function get_friends_timeline() {
-    var last_status_id = $('.status:last').attr('id');
+    var last_status_id = $('.status:first').attr('id');
     var params = (last_status_id) ? {since_id: last_status_id} : {};
     $.getJSON('/friends_timeline', params, function (data) {
         if (data.length == 0) return;
@@ -129,7 +129,7 @@ function unselect_status(status_jquery) {
 }
 
 function insert_status(status_jquery) {
-    format_status(status_jquery).appendTo('#output');
+    format_status(status_jquery).prependTo('#output');
 }
 
 function format_status(status_json) {
