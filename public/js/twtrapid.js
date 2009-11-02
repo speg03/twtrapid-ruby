@@ -78,7 +78,7 @@ function retweet() {
     var text = unlink_text(current_status.find('.status-body').html());
 
     var msg = prompt('Retweet of ' + name + ': ' + text);
-    if (msg) msg = msg + ' ';
+    msg = msg ? msg + ' ' : '';
     msg = msg + 'RT @' + name + ': ' + text;
     $.post('/update', {status: msg});
 }
