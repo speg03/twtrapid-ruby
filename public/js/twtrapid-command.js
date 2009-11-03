@@ -55,11 +55,11 @@ var TwtrapidCommand = {
         });
     },
 
-        open_link: function () {
-            $('.status.current a.status-link').each(function () {
-                window.open($(this).attr('href'));
-            });
-        },
+    open_link: function () {
+        $('.status.current a.status-link').each(function () {
+            window.open($(this).attr('href'));
+        });
+    },
 
     select_next_status: function () {
         var current_status = $('.status.current');
