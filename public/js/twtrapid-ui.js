@@ -12,43 +12,61 @@ var TwtrapidUI = {
     },
 
     insert_status: function (status_json) {
-        this.format_status(status_json).prependTo('#output');
+        this.create_status(status_json).prependTo('#output');
     },
 
-    format_status: function (status_json) {
-        var status = $('<div class="ui-widget-content ui-corner-all status">')
-            .attr('id', status_json.id);
+    create_status: function (status_json) {
+        return $('<div class="ui-widget-content ui-corner-all status">')
+            .attr('id', status_json.id)
+            .append(this.create_status_header(status_json))
+            .append(this.create_status_body(status_json))
+            .append(this.create_status_footer(status_json));
+    },
 
-        var icon_container = $('<div class="icon-container">')
+    create_status_header: function (status_json) {
+        return $('<div class="ui-helper-clearfix status-header">')
+            .append(this.create_icon(status_json))
+            .append(this.create_name(status_json))
+            .append(this.create_favorite(status_json));
+    },
+
+    create_status_body: function (status_json) {
+        var text = this.link_text(status_json.text);
+
+        return $('<div class="status-body">')
+            .html(text);
+    },
+
+    create_status_footer: function (status_json) {
+        return $('<div class="dummy">').hide();
+    },
+
+    create_icon: function (status_json) {
+        return $('<div class="icon-container">')
             .append(
                 $('<img class="icon">')
                     .attr('src', status_json.user.profile_image_url)
                     .attr('alt', status_json.user.screen_name)
             );
+    },
 
+    create_name: function (status_json) {
         var name = status_json.user.screen_name.replace(
-                /(.*)/, "<a href=\"http://twitter.com/$1\" target=\"_blank\">$1</a>");
-        var name_container = $('<div class="name">').html(name);
+            /(.*)/,
+            "<a href=\"http://twitter.com/$1\" target=\"_blank\">$1</a>"
+        );
 
-        var favorite_container = $('<div class="ui-widget-content ui-corner-all ui-state-default favorite">')
-            .append($('<span class="ui-icon ui-icon-star" style="float: left;">'));
-        favorite_container.addClass(
-            eval(status_json.favorited) ? 'ui-state-active' : 'ui-state-default');
+        return $('<div class="name">')
+            .html(name);
+    },
 
-        $('<div class="ui-helper-clearfix status-header">')
-            .append(icon_container)
-            .append(name_container)
-            .append(favorite_container)
-            .appendTo(status);
-
-        var text = this.link_text(status_json.text);
-        $('<div class="status-body">').html(text).appendTo(status);
-
-        status.click(function () {
-            TwtrapidUI.select_status($(this));
-        });
-
-        return status;
+    create_favorite: function (status_json) {
+        return $('<div class="ui-widget-content ui-corner-all ui-state-default favorite">')
+            .append(
+                $('<span class="ui-icon ui-icon-star" style="float: left;">')
+            ).addClass(
+                eval(status_json.favorited) ? 'ui-state-active' : 'ui-state-default'
+            );
     },
 
     link_text: function (text) {
