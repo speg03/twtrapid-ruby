@@ -97,7 +97,7 @@ var TwtrapidUI = {
         );
     },
 
-    unlink_text: function (text) {
+    untag_text: function (text) {
         return text.replace(/<[^>]*>/g, '');
     },
 
