@@ -20,7 +20,10 @@ var TwtrapidUI = {
             .attr('id', status_json.id)
             .append(this.create_status_header(status_json))
             .append(this.create_status_body(status_json))
-            .append(this.create_status_footer(status_json));
+            .append(this.create_status_footer(status_json))
+            .click(function () {
+                TwtrapidUI.select_status($(this));
+            });
     },
 
     create_status_header: function (status_json) {
