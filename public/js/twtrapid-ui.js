@@ -42,7 +42,7 @@ var TwtrapidUI = {
     },
 
     create_icon: function (status_json) {
-        return $('<div class="icon-container">')
+        return $('<div class="container-element">')
             .append(
                 $('<img class="icon">')
                     .attr('src', status_json.user.profile_image_url)
@@ -56,14 +56,14 @@ var TwtrapidUI = {
             "<a href=\"http://twitter.com/$1\" target=\"_blank\">$1</a>"
         );
 
-        return $('<div class="name">')
+        return $('<div class="container-element name">')
             .html(name);
     },
 
     create_favorite: function (status_json) {
-        return $('<div class="ui-widget-content ui-corner-all ui-state-default favorite">')
+        return $('<div class="ui-corner-all ui-state-default container-element favorite">')
             .append(
-                $('<span class="ui-icon ui-icon-star" style="float: left;">')
+                $('<span class="ui-icon ui-icon-star">')
             ).addClass(
                 eval(status_json.favorited) ? 'ui-state-active' : 'ui-state-default'
             );

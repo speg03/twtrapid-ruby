@@ -24,20 +24,7 @@ img {
     text-align: left;
 }
 
-.status-header {
-
-}
-
-.icon-container {
-    float: left;
-}
-
-.name {
-    margin-left: 5px;
-    float: left;
-}
-
-.favorite {
+.container-element {
     margin-left: 5px;
     float: left;
 }
