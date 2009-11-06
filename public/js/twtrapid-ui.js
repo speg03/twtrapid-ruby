@@ -28,13 +28,18 @@ var TwtrapidUI = {
 
         var name = status_json.user.screen_name.replace(
                 /(.*)/, "<a href=\"http://twitter.com/$1\" target=\"_blank\">$1</a>");
+        var name_container = $('<div class="name">').html(name);
+
+        var favorite_container = $('<div class="ui-widget-content ui-corner-all ui-state-default favorite">')
+            .append($('<span class="ui-icon ui-icon-star" style="float: left;">'));
+        favorite_container.addClass(
+            eval(status_json.favorited) ? 'ui-state-active' : 'ui-state-default');
+
         $('<div class="ui-helper-clearfix status-header">')
-            .append(
-                icon_container
-            ).append(
-                $('<div class="name">')
-                    .html(name)
-            ).appendTo(status);
+            .append(icon_container)
+            .append(name_container)
+            .append(favorite_container)
+            .appendTo(status);
 
         var text = this.link_text(status_json.text);
         $('<div class="status-body">').html(text).appendTo(status);
@@ -58,5 +63,11 @@ var TwtrapidUI = {
 
     unlink_text: function (text) {
         return text.replace(/<[^>]*>/g, '');
+    },
+
+    favorite_status: function (status_jquery) {
+        var s = status_jquery.find('.favorite');
+        s.removeClass('ui-state-default');
+        s.addClass('ui-state-active');
     }
 };

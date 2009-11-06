@@ -50,8 +50,10 @@ var TwtrapidCommand = {
         if (current_status.length == 0) return;
 
         var current_id = current_status.attr('id');
-        $.post('/favorites_create', {id: current_id}, function () {
-            alert('favorited!');
+        $.post('/favorites_create', {id: current_id}, function (result) {
+            var json = eval('(' + result + ')');
+            var s = $('.status#' + json.id);
+            TwtrapidUI.favorite_status(s);
         });
     },
 
