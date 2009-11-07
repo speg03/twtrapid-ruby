@@ -82,7 +82,7 @@ var TwtrapidUI = {
     create_http_link: function (text) {
         return text.replace(
             /(https?:\/\/[\w-.!~*'();/?:@&=+$,%#]+)/g,
-            "<a href=\"$1\" class=\"status-link\" target=\"_blank\">$1</a>"
+            "<a href=\"$1\" target=\"_blank\">$1</a>"
         );
     },
 

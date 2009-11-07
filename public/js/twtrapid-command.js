@@ -58,8 +58,10 @@ var TwtrapidCommand = {
     },
 
     open_link: function () {
-        $('.status.current a.status-link').each(function () {
-            window.open($(this).attr('href'));
+        $('.status.current a').each(function () {
+            if ($(this).text().match(/^https?:\/\//)) {
+                window.open($(this).attr('href'));
+            }
         });
     },
 
