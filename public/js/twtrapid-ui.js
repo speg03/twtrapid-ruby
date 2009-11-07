@@ -1,14 +1,38 @@
 var TwtrapidUI = {
+    current_status: function () {
+        return $('.status.current');
+    },
+
+    first_status: function () {
+        return $('.status:first');
+    },
+
+    last_status: function () {
+        return $('.status:last');
+    },
+
+    latest_status: function () {
+        return this.first_status();
+    },
+
     select_status: function (status_jquery) {
         this.unselect_status();
         status_jquery.addClass('ui-state-highlight current');
 
-        var o = ($(window).height() - status_jquery.height()) / 2;
-        $.scrollTo(status_jquery, 0, {axis: 'y', offset: -o});
+        this.scroll_to_status(status_jquery);
     },
 
     unselect_status: function () {
-        $('.status.current').removeClass('ui-state-highlight current');
+        this.current_status().removeClass('ui-state-highlight current');
+    },
+
+    is_selected: function () {
+        return this.current_status().length != 0;
+    },
+
+    scroll_to_status: function (status_jquery) {
+        var d = ($(window).height() - status_jquery.height()) / 2;
+        $.scrollTo(status_jquery, 0, {axis: 'y', offset: -d});
     },
 
     insert_status: function (status_json) {
@@ -84,5 +108,19 @@ var TwtrapidUI = {
 
     is_favorited: function (status_jquery) {
         return status_jquery.find('.favorite').hasClass('ui-state-active');
+    },
+
+    status_id: function (status_jquery) {
+        return status_jquery.attr('id');
+    },
+
+    status_name: function (status_jquery) {
+        var name = status_jquery.find('.name').html();
+        return TwtrapidUtil.untag(name);
+    },
+
+    status_text: function (status_jquery) {
+        var text = status_jquery.find('.status-body').html();
+        return TwtrapidUtil.untag(text);
     }
 };

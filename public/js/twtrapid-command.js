@@ -1,7 +1,8 @@
 var TwtrapidCommand = {
     get_friends_timeline: function () {
-        var last_status_id = $('.status:first').attr('id');
-        var params = (last_status_id) ? {since_id: last_status_id} : {};
+        var latest_status = TwtrapidUI.latest_status();
+        var latest_status_id = TwtrapidUI.status_id(latest_status);
+        var params = (latest_status_id) ? {since_id: latest_status_id} : {};
         $.getJSON('/friends_timeline', params, function (data) {
             if (data.length == 0) return;
 
@@ -18,12 +19,12 @@ var TwtrapidCommand = {
     },
 
     reply: function () {
-        var current_status = $('.status.current');
-        if (current_status.length == 0) return;
+        if (!TwtrapidUI.is_selected()) return;
+        var current_status = TwtrapidUI.current_status();
 
-        var current_id = current_status.attr('id');
-        var name = TwtrapidUtil.untag(current_status.find('.name').html());
-        var text = TwtrapidUtil.untag(current_status.find('.status-body').html());
+        var current_id = TwtrapidUI.status_id(current_status);
+        var name = TwtrapidUI.status_name(current_status);
+        var text = TwtrapidUI.status_text(current_status);
 
         var msg = prompt('Reply to ' + name + ': ' + text);
         if (msg) {
@@ -33,11 +34,11 @@ var TwtrapidCommand = {
     },
 
     retweet: function () {
-        var current_status = $('.status.current');
-        if (current_status.length == 0) return;
+        if (!TwtrapidUI.is_selected()) return;
+        var current_status = TwtrapidUI.current_status();
 
-        var name = TwtrapidUtil.untag(current_status.find('.name').html());
-        var text = TwtrapidUtil.untag(current_status.find('.status-body').html());
+        var name = TwtrapidUI.status_name(current_status);
+        var text = TwtrapidUI.status_text(current_status);
 
         var msg = prompt('Retweet of ' + name + ': ' + text);
         msg = msg ? msg + ' ' : '';
@@ -46,8 +47,8 @@ var TwtrapidCommand = {
     },
 
     favorite: function () {
-        var current_status = $('.status.current');
-        if (current_status.length == 0) return;
+        if (!TwtrapidUI.is_selected()) return;
+        var current_status = TwtrapidUI.current_status();
 
         var path = TwtrapidUI.is_favorited(current_status) ?
             '/favorites_destroy' : '/favorites_create';
@@ -60,7 +61,7 @@ var TwtrapidCommand = {
     },
 
     open_link: function () {
-        $('.status.current a').each(function () {
+        TwtrapidUI.current_status().find('a').each(function () {
             if ($(this).text().match(/^https?:\/\//)) {
                 window.open($(this).attr('href'));
             }
@@ -68,40 +69,40 @@ var TwtrapidCommand = {
     },
 
     select_next_status: function () {
-        var current_status = $('.status.current');
-        if (current_status.length == 0) {
-            TwtrapidUI.select_status($('.status:first'));
+        if (!TwtrapidUI.is_selected()) {
+            TwtrapidUI.select_status(TwtrapidUI.first_status());
             return;
         }
 
-        if (current_status.attr('id') == $('.status:last').attr('id')) {
-            return;
-        }
+        var current_status = TwtrapidUI.current_status();
+        var current_id = TwtrapidUI.status_id(current_status);
+        var last_id = TwtrapidUI.status_id(TwtrapidUI.last_status());
+        if (current_id == last_id) return;
 
         var next_status = current_status.next();
         TwtrapidUI.select_status(next_status);
     },
 
     select_prev_status: function () {
-        var current_status = $('.status.current');
-        if (current_status.length == 0) {
-            TwtrapidUI.select_status($('.status:first'));
+        if (!TwtrapidUI.is_selected()) {
+            TwtrapidUI.select_status(TwtrapidUI.first_status());
             return;
         }
 
-        if (current_status.attr('id') == $('.status:first').attr('id')) {
-            return;
-        }
+        var current_status = TwtrapidUI.current_status();
+        var current_id = TwtrapidUI.status_id(current_status);
+        var first_id = TwtrapidUI.status_id(TwtrapidUI.first_status());
+        if (current_id == first_id) return;
 
         var prev_status = current_status.prev();
         TwtrapidUI.select_status(prev_status);
     },
 
     select_first_status: function () {
-        TwtrapidUI.select_status($('.status:first'));
+        TwtrapidUI.select_status(TwtrapidUI.first_status());
     },
 
     select_last_status: function () {
-        TwtrapidUI.select_status($('.status:last'));
+        TwtrapidUI.select_status(TwtrapidUI.last_status());
     }
 };
