@@ -27,7 +27,7 @@ var TwtrapidCommand = {
         var text = TwtrapidUI.status_text(current_status);
 
         var msg = prompt('Reply to ' + name + ': ' + text);
-        if (msg) {
+        if (msg != null) {
             msg = '@' + name + ' ' + msg;
             $.post('/update', {status: msg, in_reply_to_status_id: current_id});
         }
@@ -41,9 +41,11 @@ var TwtrapidCommand = {
         var text = TwtrapidUI.status_text(current_status);
 
         var msg = prompt('Retweet of ' + name + ': ' + text);
-        msg = msg ? msg + ' ' : '';
-        msg = msg + 'RT @' + name + ': ' + text;
-        $.post('/update', {status: msg});
+        if (msg != null) {
+            if (msg != '') msg += ' ';
+            msg = msg + 'RT @' + name + ': ' + text;
+            $.post('/update', {status: msg});
+        }
     },
 
     favorite: function () {
