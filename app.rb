@@ -60,3 +60,9 @@ post '/favorites_create' do
   Twtrapid.post(
     "#{SITE}/favorites/create/#{id}.json", {})
 end
+
+post '/favorites_destroy' do
+  id = params[:id]
+  Twtrapid.post(
+    "#{SITE}/favorites/destroy/#{id}.json", {})
+end

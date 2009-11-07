@@ -49,11 +49,13 @@ var TwtrapidCommand = {
         var current_status = $('.status.current');
         if (current_status.length == 0) return;
 
+        var path = TwtrapidUI.is_favorited(current_status) ?
+            '/favorites_destroy' : '/favorites_create';
         var current_id = current_status.attr('id');
-        $.post('/favorites_create', {id: current_id}, function (result) {
+        $.post(path, {id: current_id}, function (result) {
             var json = eval('(' + result + ')');
             var s = $('.status#' + json.id);
-            TwtrapidUI.favorite_status(s);
+            TwtrapidUI.toggle_favorite(s);
         });
     },
 

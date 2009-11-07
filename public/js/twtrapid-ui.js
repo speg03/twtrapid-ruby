@@ -70,9 +70,19 @@ var TwtrapidUI = {
             );
     },
 
-    favorite_status: function (status_jquery) {
+    toggle_favorite: function (status_jquery) {
         var s = status_jquery.find('.favorite');
-        s.removeClass('ui-state-default');
-        s.addClass('ui-state-active');
+        if (this.is_favorited(status_jquery)) {
+            s.removeClass('ui-state-active');
+            s.addClass('ui-state-default');
+        }
+        else {
+            s.removeClass('ui-state-default');
+            s.addClass('ui-state-active');
+        }
+    },
+
+    is_favorited: function (status_jquery) {
+        return status_jquery.find('.favorite').hasClass('ui-state-active');
     }
 };
