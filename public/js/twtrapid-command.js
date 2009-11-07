@@ -22,8 +22,8 @@ var TwtrapidCommand = {
         if (current_status.length == 0) return;
 
         var current_id = current_status.attr('id');
-        var name = TwtrapidUI.untag_text(current_status.find('.name').html());
-        var text = TwtrapidUI.untag_text(current_status.find('.status-body').html());
+        var name = TwtrapidUtil.untag(current_status.find('.name').html());
+        var text = TwtrapidUtil.untag(current_status.find('.status-body').html());
 
         var msg = prompt('Reply to ' + name + ': ' + text);
         if (msg) {
@@ -36,8 +36,8 @@ var TwtrapidCommand = {
         var current_status = $('.status.current');
         if (current_status.length == 0) return;
 
-        var name = TwtrapidUI.untag_text(current_status.find('.name').html());
-        var text = TwtrapidUI.untag_text(current_status.find('.status-body').html());
+        var name = TwtrapidUtil.untag(current_status.find('.name').html());
+        var text = TwtrapidUtil.untag(current_status.find('.status-body').html());
 
         var msg = prompt('Retweet of ' + name + ': ' + text);
         msg = msg ? msg + ' ' : '';
