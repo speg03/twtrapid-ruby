@@ -40,7 +40,7 @@ get '/' do
     redirect Twtrapid.authorize_url(
       "http://#{request.host}:#{request.port}/oauth_callback")
   end
-  redirect '/timeline.html'
+  send_file 'timeline.html'
 end
 
 get '/friends_timeline' do
