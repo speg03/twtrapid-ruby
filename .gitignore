@@ -1,3 +1,5 @@
 key.yml
 .gems
 WEB-INF
+bin
+robots.txt
