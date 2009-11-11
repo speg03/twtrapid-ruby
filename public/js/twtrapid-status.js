@@ -52,3 +52,7 @@ TwtrapidStatus.prototype.set_favorited = function (state) {
         s.addClass('ui-state-default');
     }
 };
+
+TwtrapidStatus.prototype.is_protected = function () {
+    return this.jquery.find('.protected').length != 0;
+};

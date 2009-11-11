@@ -66,6 +66,7 @@ var TwtrapidUI = {
         return $('<div class="ui-helper-clearfix status-header">')
             .append(this.create_icon(status_json))
             .append(this.create_name(status_json))
+            .append(this.create_protected(status_json))
             .append(this.create_favorite(status_json));
     },
 
@@ -104,5 +105,17 @@ var TwtrapidUI = {
             ).addClass(
                 eval(status_json.favorited) ? 'ui-state-active' : 'ui-state-default'
             );
+    },
+
+    create_protected: function (status_json) {
+        var c = $('<div>');
+        if (status_json.user.protected) {
+            c.addClass('ui-corner-all ui-state-error container-element protected')
+                .append('<span class="ui-icon ui-icon-locked">');
+        }
+        else {
+            c.addClass('dummy').hide();
+        }
+        return c;
     }
 };
