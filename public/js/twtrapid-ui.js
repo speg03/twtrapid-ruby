@@ -103,7 +103,7 @@ var TwtrapidUI = {
             .append(
                 $('<span class="ui-icon ui-icon-star">')
             ).addClass(
-                eval(status_json.favorited) ? 'ui-state-active' : 'ui-state-default'
+                status_json.favorited ? 'ui-state-active' : 'ui-state-default'
             );
     },
 
