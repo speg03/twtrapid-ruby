@@ -58,7 +58,7 @@ var TwtrapidUI = {
             .append(this.create_status_body(status_json))
             .append(this.create_status_footer(status_json))
             .click(function () {
-                TwtrapidUI.select_status($(this));
+                TwtrapidUI.select_status(new TwtrapidStatus($(this)));
             });
     },
 
