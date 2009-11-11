@@ -38,11 +38,12 @@ var TwtrapidCommand = {
 
         var id = current_status.id();
         var name = current_status.name();
+        var pname = current_status.is_protected() ? '<protected>' : name;
         var text = current_status.text();
 
-        var msg = prompt('Retweet of ' + name + ': ' + text, 'RT @' + name + ': ' + text);
+        var msg = prompt('Retweet of ' + name + ': ' + text, 'RT @' + pname + ': ' + text);
         if (msg) {
-            $.post('/update', {status: msg, in_reply_to_status_id: id});
+            $.post('/update', {status: msg});
         }
     },
 
