@@ -108,14 +108,8 @@ var TwtrapidUI = {
     },
 
     create_protected: function (status_json) {
-        var c = $('<div>');
-        if (status_json.user.protected) {
-            c.addClass('ui-corner-all ui-state-error container-element protected')
-                .append('<span class="ui-icon ui-icon-locked">');
-        }
-        else {
-            c.addClass('dummy').hide();
-        }
-        return c;
+        return !status_json.user.protected ? $ :
+            $('<div class="ui-corner-all ui-state-error container-element protected">')
+            .append('<span class="ui-icon ui-icon-locked">');
     }
 };
