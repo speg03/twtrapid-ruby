@@ -1,38 +1,50 @@
 var TwtrapidUI = {
     current_status: function () {
-        return $('.status.current');
+        return new TwtrapidStatus($('.status.current'));
     },
 
     first_status: function () {
-        return $('.status:first');
+        return new TwtrapidStatus($('.status:first'));
     },
 
     last_status: function () {
-        return $('.status:last');
+        return new TwtrapidStatus($('.status:last'));
+    },
+
+    next_status: function (status) {
+        return new TwtrapidStatus(status.jquery.next());
+    },
+
+    prev_status: function (status) {
+        return new TwtrapidStatus(status.jquery.prev());
+    },
+
+    find_status_by_id: function (id) {
+        return new TwtrapidStatus($('.status#' + id));
     },
 
     latest_status: function () {
         return this.first_status();
     },
 
-    select_status: function (status_jquery) {
+    select_status: function (status) {
         this.unselect_status();
-        status_jquery.addClass('ui-state-highlight current');
+        status.set_selected(true);
 
-        this.scroll_to_status(status_jquery);
+        this.scroll_to_status(status);
     },
 
     unselect_status: function () {
-        this.current_status().removeClass('ui-state-highlight current');
+        this.current_status().set_selected(false);
     },
 
     is_selected: function () {
-        return this.current_status().length != 0;
+        return this.current_status().jquery.length != 0;
     },
 
-    scroll_to_status: function (status_jquery) {
-        var d = ($(window).height() - status_jquery.height()) / 2;
-        $.scrollTo(status_jquery, 0, {axis: 'y', offset: -d});
+    scroll_to_status: function (status) {
+        var d = ($(window).height() - status.jquery.height()) / 2;
+        $.scrollTo(status.jquery, 0, {axis: 'y', offset: -d});
     },
 
     insert_status: function (status_json) {
@@ -92,35 +104,5 @@ var TwtrapidUI = {
             ).addClass(
                 eval(status_json.favorited) ? 'ui-state-active' : 'ui-state-default'
             );
-    },
-
-    toggle_favorite: function (status_jquery) {
-        var s = status_jquery.find('.favorite');
-        if (this.is_favorited(status_jquery)) {
-            s.removeClass('ui-state-active');
-            s.addClass('ui-state-default');
-        }
-        else {
-            s.removeClass('ui-state-default');
-            s.addClass('ui-state-active');
-        }
-    },
-
-    is_favorited: function (status_jquery) {
-        return status_jquery.find('.favorite').hasClass('ui-state-active');
-    },
-
-    status_id: function (status_jquery) {
-        return status_jquery.attr('id');
-    },
-
-    status_name: function (status_jquery) {
-        var name = status_jquery.find('.name').html();
-        return TwtrapidUtil.untag(name);
-    },
-
-    status_text: function (status_jquery) {
-        var text = status_jquery.find('.status-body').html();
-        return TwtrapidUtil.untag(text);
     }
 };
