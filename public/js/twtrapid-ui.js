@@ -138,18 +138,48 @@ var TwtrapidUI = {
         return $('<div class="ui-corner-all ui-state-default footer-element button favorite">')
             .append($('<span class="ui-icon ui-icon-star button-element">'))
             .append($('<span class="button-element">').text('Favorite'))
-            .addClass(status_json.favorited ? 'ui-state-active' : 'ui-state-default');
+            .addClass(status_json.favorited ? 'ui-state-active' : 'ui-state-default')
+            .hover(function () {
+                $(this).addClass('ui-state-hover hover-button');
+            }, function () {
+                $(this).removeClass('ui-state-hover hover-button');
+            })
+            .click(function () {
+                var s = TwtrapidUI.find_status_by_id(status_json.id);
+                TwtrapidUI.select_status(s);
+                TwtrapidCommand.favorite();
+            });
     },
 
     create_reply: function (status_json) {
         return $('<div class="ui-corner-all ui-state-default footer-element button reply">')
             .append($('<span class="ui-icon ui-icon-arrowreturnthick-1-w button-element">'))
-            .append($('<span class="button-element">').text('Reply'));
+            .append($('<span class="button-element">').text('Reply'))
+            .hover(function () {
+                $(this).addClass('ui-state-hover hover-button');
+            }, function () {
+                $(this).removeClass('ui-state-hover hover-button');
+            })
+            .click(function () {
+                var s = TwtrapidUI.find_status_by_id(status_json.id);
+                TwtrapidUI.select_status(s);
+                TwtrapidCommand.reply();
+            });
     },
 
     create_retweet: function (status_json) {
         return $('<div class="ui-corner-all ui-state-default footer-element button retweet">')
             .append($('<span class="ui-icon ui-icon-refresh button-element">'))
-            .append($('<span class="button-element">').text('Retweet'));
+            .append($('<span class="button-element">').text('Retweet'))
+            .hover(function () {
+                $(this).addClass('ui-state-hover hover-button');
+            }, function () {
+                $(this).removeClass('ui-state-hover hover-button');
+            })
+            .click(function () {
+                var s = TwtrapidUI.find_status_by_id(status_json.id);
+                TwtrapidUI.select_status(s);
+                TwtrapidCommand.retweet();
+            });
     }
 };

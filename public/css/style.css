@@ -70,3 +70,7 @@ img {
     font-size: small;
     float: left;
 }
+
+.hover-button {
+    cursor: pointer;
+}
