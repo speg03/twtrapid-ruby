@@ -2,34 +2,71 @@ body {
     text-align: center;
 }
 
+img {
+    border-style: none;
+}
+
 .name > a {
     font-weight: bold;
     color: #2e6e9e;
 }
 
-img {
-    border-style: none;
+.icon {
+    width: 48px;
+    height: 48px;
 }
 
-.icon {
-    width: 24px;
-    height: 24px;
+.time, .source {
+    font-size: small;
+    font-style: italic;
 }
 
 #twtrapid {
-    width: 85%;
-    min-width: 700px;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
     text-align: left;
 }
 
-.container-element {
+.status {
+    padding: 5px;
+    margin: 5px;
+}
+
+.icon-container {
+    float: left;
+    margin-right: 5px;
+}
+
+.status-container {
+    width: 100%;
+    float: left;
+    margin-right: -55px;
+}
+
+.status-container > * {
+    margin-right: 55px;
+}
+
+.header-element {
     margin-left: 5px;
     float: left;
 }
 
-.status {
-    padding: 5px;
-    margin: 5px;
+.body-element {
+    text-indent: 1em;
+}
+
+.footer-element {
+    margin-left: 5px;
+    float: right;
+}
+
+.button {
+    padding-right: 5px;
+}
+
+.button-element {
+    font-size: small;
+    float: left;
 }
