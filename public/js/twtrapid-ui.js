@@ -30,8 +30,6 @@ var TwtrapidUI = {
     select_status: function (status) {
         this.unselect_status();
         status.set_selected(true);
-
-        this.scroll_to_status(status);
     },
 
     unselect_status: function () {

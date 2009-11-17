@@ -69,7 +69,7 @@ var TwtrapidCommand = {
 
     select_next_status: function () {
         if (!TwtrapidUI.is_selected()) {
-            TwtrapidUI.select_status(TwtrapidUI.first_status());
+            this.select_first_status();
             return;
         }
 
@@ -80,11 +80,12 @@ var TwtrapidCommand = {
 
         var next_status = TwtrapidUI.next_status(current_status);
         TwtrapidUI.select_status(next_status);
+        TwtrapidUI.scroll_to_status(next_status);
     },
 
     select_prev_status: function () {
         if (!TwtrapidUI.is_selected()) {
-            TwtrapidUI.select_status(TwtrapidUI.first_status());
+            this.select_first_status();
             return;
         }
 
@@ -95,13 +96,18 @@ var TwtrapidCommand = {
 
         var prev_status = TwtrapidUI.prev_status(current_status);
         TwtrapidUI.select_status(prev_status);
+        TwtrapidUI.scroll_to_status(prev_status);
     },
 
     select_first_status: function () {
-        TwtrapidUI.select_status(TwtrapidUI.first_status());
+        var first_status = TwtrapidUI.first_status();
+        TwtrapidUI.select_status(first_status);
+        TwtrapidUI.scroll_to_status(first_status);
     },
 
     select_last_status: function () {
-        TwtrapidUI.select_status(TwtrapidUI.last_status());
+        var last_status = TwtrapidUI.last_status();
+        TwtrapidUI.select_status(last_status);
+        TwtrapidUI.scroll_to_status(last_status);
     }
 };
