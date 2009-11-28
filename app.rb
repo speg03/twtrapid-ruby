@@ -8,12 +8,10 @@ require 'twtrapid'
 
 configure do
   key = YAML::load_file('key.yml')
-  SITE = 'http://twitter.com'
-
   Twtrapid.init(
     :consumer_key => key['consumer_key'],
     :consumer_secret => key['consumer_secret'],
-    :site => SITE)
+    :site => 'http://twitter.com')
 end
 
 
@@ -43,26 +41,33 @@ get '/' do
   send_file 'timeline.html'
 end
 
+get '/home_timeline' do
+  since_id = params[:since_id] ? params[:since_id] : nil
+  query = since_id ? "?since_id=#{since_id}" : ""
+  Twtrapid.get(
+    "http://api.twitter.com/1/statuses/home_timeline.json#{query}")
+end
+
 get '/friends_timeline' do
   since_id = params[:since_id] ? params[:since_id] : nil
   query = since_id ? "?since_id=#{since_id}" : ""
   Twtrapid.get(
-    "#{SITE}/statuses/friends_timeline.json#{query}")
+    "http://twitter.com/statuses/friends_timeline.json#{query}")
 end
 
 post '/update' do
   Twtrapid.post(
-    "#{SITE}/statuses/update.json", params)
+    "http://twitter.com/statuses/update.json", params)
 end
 
 post '/favorites_create' do
   id = params[:id]
   Twtrapid.post(
-    "#{SITE}/favorites/create/#{id}.json", {})
+    "http://twitter.com/favorites/create/#{id}.json", {})
 end
 
 post '/favorites_destroy' do
   id = params[:id]
   Twtrapid.post(
-    "#{SITE}/favorites/destroy/#{id}.json", {})
+    "http://twitter.com/favorites/destroy/#{id}.json", {})
 end

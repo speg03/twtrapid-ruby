@@ -3,7 +3,7 @@ var TwtrapidCommand = {
         var latest_status = TwtrapidUI.latest_status();
         var latest_status_id = latest_status.id();
         var params = (latest_status_id) ? {since_id: latest_status_id} : {};
-        $.getJSON('/friends_timeline', params, function (data) {
+        $.getJSON('/home_timeline', params, function (data) {
             if (data.length == 0) return;
 
             data.reverse();
