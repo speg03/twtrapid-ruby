@@ -15,7 +15,7 @@ var TwtrapidCommand = {
 
     update: function () {
         var msg = prompt('What are you doing?');
-        if (msg) $.post('/update', {status: msg});
+        if (msg) $.post('/update', {status: msg}, this.get_friends_timeline);
     },
 
     reply: function () {
@@ -28,7 +28,7 @@ var TwtrapidCommand = {
 
         var msg = prompt('Reply to ' + name + ': ' + text, '@' + name + ' ');
         if (msg) {
-            $.post('/update', {status: msg, in_reply_to_status_id: id});
+            $.post('/update', {status: msg, in_reply_to_status_id: id}, this.get_friends_timeline);
         }
     },
 
@@ -43,7 +43,7 @@ var TwtrapidCommand = {
 
         var msg = prompt('Retweet of ' + name + ': ' + text, 'RT @' + pname + ': ' + text);
         if (msg) {
-            $.post('/update', {status: msg});
+            $.post('/update', {status: msg}, this.get_friends_timeline);
         }
     },
 
