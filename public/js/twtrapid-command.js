@@ -1,9 +1,14 @@
 var TwtrapidCommand = {
+    locked: false,
     get_friends_timeline: function () {
+        if (TwtrapidCommand.locked) return;
+        TwtrapidCommand.locked = true;
+
         var latest_status = TwtrapidUI.latest_status();
         var latest_status_id = latest_status.id();
         var params = (latest_status_id) ? {since_id: latest_status_id} : {};
         $.getJSON('/home_timeline', params, function (data) {
+            TwtrapidCommand.locked = false;
             if (data.length == 0) return;
 
             data.reverse();
